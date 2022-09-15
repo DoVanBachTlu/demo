@@ -69,29 +69,25 @@ const Home = props => {
   const dispatch = useDispatch();
   const limitPerPage = 10;
 
-  // useEffect(() => {
-  //   setData(dataExample);
-  //   Home;
-  // }, []);
-
   const load = async () => {
     try {
       console.log('start load');
-      await fetchPostAction(pageCurrent, limitPerPage);
+      // await fetchPostAction(pageCurrent, limitPerPage);
+      dispatch(fetchPostAction);
     } catch (error) {
       console.log('error load data', error);
     }
-    // dispatch(fetchPostAction);
   };
-  useEffect(() => {
-    setIsLoading(true);
-    load();
-    setIsLoading(false);
-  }, [pageCurrent]);
-
-  // useEffect( () => {
+  // useEffect(() => {
+  //   setIsLoading(true);
   //   load();
-  // }, []);
+  //   setIsLoading(false);
+  // }, [pageCurrent]);
+
+  useEffect( () => {
+    // setData(dataExample);
+    load();
+  }, []);
 
   const renderFooter = () => {
     return isLoading ? (
@@ -106,7 +102,7 @@ const Home = props => {
 
   const handleLoadMore = () => {
    setIsLoading(true)
-   setPageCurrent(page + 1)
+   setPageCurrent(pageCurrent + 1)
   };
 
   const navigation = useNavigation();
@@ -233,7 +229,7 @@ const Home = props => {
           <FlatList
             data={post}
             onEndReachedThreshold={0.5}
-            onEndReached={() => handleLoadMore()}
+            // onEndReached={() => handleLoadMore()}
             renderItem={({item}) => <PostView data={item} />}
             keyExtractor={(item, index) => index.toString()}
             ListFooterComponent={renderFooter()}
