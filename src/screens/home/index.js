@@ -73,7 +73,7 @@ const Home = props => {
     try {
       console.log('start load');
       // await fetchPostAction(pageCurrent, limitPerPage);
-      dispatch(fetchPostAction);
+      await dispatch(fetchPostAction);
     } catch (error) {
       console.log('error load data', error);
     }

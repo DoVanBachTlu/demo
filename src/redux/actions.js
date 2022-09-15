@@ -14,8 +14,8 @@ export const fetchPostAction = (page, limit) => {
   try {
     console.log('page', page, limit)
     return async dispatch => {
-      const response = await axios.get(`${BASE_URL}/fb/v1/fb?page=${page}&limit=${limit}`);
-      // const response = await axios.get(`${BASE_URL}/fb/v1/fb`);
+      // const response = await axios.get(`${BASE_URL}/fb/v1/fb?page=${page}&limit=${limit}`);
+      const response = await axios.get(`${BASE_URL}/fb/v1/fb`);
       console.log('response', response);
       if (response.data) {
         dispatch({
