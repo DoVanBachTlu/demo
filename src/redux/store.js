@@ -7,11 +7,13 @@ import reducer from './reducers';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whiteList: ['postList'],
+  debug: true
+  // whiteList: ['post'],
 };
-
 const rootReducer = combineReducers({
   postReducer: persistReducer(persistConfig, reducer),
 });
+
+
 export const store = createStore(rootReducer, applyMiddleware(thunk));
 export const appPersist = persistStore(store);

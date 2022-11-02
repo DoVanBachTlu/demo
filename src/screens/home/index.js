@@ -1,5 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React, {
+  useEffect,
+  useState,
+  createContext,
+  useContext,
+  useRef,
+} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -13,13 +19,16 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import StoryFLL from '../../components/storyFLL';
-import {fetchPostAction} from '../../redux/actions';
+import {
+  fetchPostLoadMoreAction,
+  firstfetchPostLoadMoreAction,
+} from '../../redux/actions';
 import PostView from './../../components/PostView/index';
 import styles from './style';
 import {useDispatch} from 'react-redux';
 import axios from 'axios';
 import {BASE_URL} from '../../utilities';
-
+import {UserContext} from '../../../App';
 let dataExample = [
   {
     imgBg: 'https://bom.to/rnvQz27VZg',
@@ -59,37 +68,64 @@ let dataExample = [
 ];
 const Widths = Dimensions.get('window').width;
 const Heights = Dimensions.get('window').height;
+// let isLockLoadMore;
 
 const Home = props => {
-  const {post, fetchPostAction} = props;
+  const {post, fetchPostLoadMoreAction} = props;
   const [data, setData] = useState([]);
-  const [check, setCheck] = useState(false);
+  console.log('statePost=>>', post);
   const [isLoading, setIsLoading] = useState(false);
   const [pageCurrent, setPageCurrent] = useState(1);
   const dispatch = useDispatch();
-  const limitPerPage = 10;
+  const limitPerPage = 5;
+  const isLockLoadMore = useRef(false);
 
-  const load = async () => {
+  const firstLoadData = async () => {
+    console.log('first1=>');
     try {
-      console.log('start load');
-      // await fetchPostAction(pageCurrent, limitPerPage);
-      await dispatch(fetchPostAction);
+      console.log('first2=>');
+      // await dispatch(firstfetchPostLoadMoreAction());
+      await props.firstfetchPostLoadMoreAction();
+      console.log('first3=>');
+      console.log('first4=>');
     } catch (error) {
-      console.log('error load data', error);
+      console.log('firstLoadData error', error);
     }
   };
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   load();
-  //   setIsLoading(false);
-  // }, [pageCurrent]);
 
-  useEffect( () => {
-    // setData(dataExample);
-    load();
+  const loadDataLoadMore = async () => {
+    console.log('load1=>');
+    try {
+      isLockLoadMore.current = true;
+      console.log('isLockLoadMore=>', isLockLoadMore.current);
+      // await dispatch(fetchPostLoadMoreAction(pageCurrent, limitPerPage));
+      await props.fetchPostLoadMoreAction(pageCurrent, limitPerPage);
+      console.log('checkPositionLockLoadMore_1');
+      isLockLoadMore.current = false;
+      console.log('isLockLoadMore1=>', isLockLoadMore);
+    } catch (error) {
+      isLockLoadMore.current = false;
+      console.log('🚀 ~ file: index.js ~ line 100 ~ loadData ~ error', error);
+    }
+  };
+
+  useEffect(() => {
+    console.log('first=>');
+    firstLoadData();
   }, []);
 
+  useEffect(() => {
+    console.log('pageCurrentChange');
+    console.log('isLockLoadMore2=>', isLockLoadMore.current);
+    // setIsLoading(true);
+    // isLockLoadMore.current = true;
+    loadDataLoadMore();
+    // isLockLoadMore.current = false;
+    // setIsLoading(false);
+  }, [pageCurrent]);
+
   const renderFooter = () => {
+    console.log('isLockLoadMore3=>', isLockLoadMore);
     return isLoading ? (
       <View style={{marginTop: 10, alignItems: 'center'}}>
         <ActivityIndicator size="large" />
@@ -97,22 +133,31 @@ const Home = props => {
     ) : null;
   };
 
-  const lockHandleLoadMore = () => {
-  }
-
   const handleLoadMore = () => {
-   setIsLoading(true)
-   setPageCurrent(pageCurrent + 1)
+    console.log('onStart', pageCurrent);
+    console.log('isLockLoadMore4=>', isLockLoadMore);
+    // return;
+    if (!isLockLoadMore.current) {
+      console.log('pageCurrent++');
+      setPageCurrent(pageCurrent + 1);
+      setIsLoading(true);
+    }
+    console.log('isLockLoadMore5=>', isLockLoadMore);
   };
 
   const navigation = useNavigation();
-  return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
+  console.log('111==>');
+  const userContextEx = useContext(UserContext);
+  console.log('userContextEx', userContextEx);
+  console.log('lockLoadMore2', isLockLoadMore);
+  console.log('length=>', data);
+  const Header = () => {
+    return (
+      <View style={{marginBottom: 10}}>
         <View style={styles.header}>
           <Image
             source={{
-              uri: 'https://bom.to/4tHUYmgquP',
+              uri: 'https://goeco.link/TXVAD',
             }}
             style={styles.fbLogo}
           />
@@ -133,7 +178,7 @@ const Home = props => {
 
             <Image
               source={{
-                uri: 'https://bom.to/xpSyWXqnhX',
+                uri: 'https://goeco.link/FRYCJ',
               }}
               style={styles.messIcon}
             />
@@ -161,7 +206,6 @@ const Home = props => {
             onPress={() => {
               navigation.navigate('PostScreen', {
                 post: post,
-                setCheck: setCheck,
               });
             }}>
             <Text>Bạn đang nghĩ gì?</Text>
@@ -171,7 +215,11 @@ const Home = props => {
         <View style={styles.option}>
           <View style={styles.livestream}>
             <Image
-              style={{resizeMode: 'contain', height: '40%', width: '22%'}}
+              style={{
+                resizeMode: 'contain',
+                height: '40%',
+                width: '22%',
+              }}
               source={{
                 uri: 'https://bom.to/tk4Kya19AD',
               }}
@@ -189,7 +237,11 @@ const Home = props => {
           </View>
           <View style={styles.image}>
             <Image
-              style={{resizeMode: 'contain', height: '40%', width: '25%'}}
+              style={{
+                resizeMode: 'contain',
+                height: '40%',
+                width: '25%',
+              }}
               source={{
                 uri: 'https://bom.to/xhIx9zhkvl',
               }}
@@ -208,7 +260,11 @@ const Home = props => {
 
           <View style={styles.checkIn}>
             <Image
-              style={{resizeMode: 'contain', height: '40%', width: '25%'}}
+              style={{
+                resizeMode: 'contain',
+                height: '40%',
+                width: '25%',
+              }}
               source={{
                 uri: 'https://bom.to/NewLF9zaLK',
               }}
@@ -220,33 +276,55 @@ const Home = props => {
         {/* <StoryFLL data={data} /> */}
 
         <TouchableOpacity style={styles.btnMore}>
-          <Text style={{fontSize: 16, fontWeight: 'bold', color: '#58D3F7'}}>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: 'bold',
+              color: '#58D3F7',
+            }}>
             Hiển thị thêm
           </Text>
         </TouchableOpacity>
-
-        <View style={styles.postInfor}>
-          <FlatList
-            data={post}
-            onEndReachedThreshold={0.5}
-            // onEndReached={() => handleLoadMore()}
-            renderItem={({item}) => <PostView data={item} />}
-            keyExtractor={(item, index) => index.toString()}
-            ListFooterComponent={renderFooter()}
-          />
-        </View>
-      </ScrollView>
+      </View>
+    );
+  };
+  return (
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        style={{flex: 1}}
+        data={post}
+        onEndReachedThreshold={0.5}
+        onEndReached={() => {
+          console.log('onEnd');
+          handleLoadMore();
+        }}
+        ListHeaderComponent={Header()}
+        renderItem={({item}) => (
+          <View style={styles.postInfor}>
+            <PostView data={item} />
+          </View>
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        ListFooterComponent={renderFooter()}
+      />
     </SafeAreaView>
   );
 };
-const mapStateToProps = state => ({
-  post: state.postReducer.post,
-});
+const mapStateToProps = state => (
+  console.log('state.page', state),
+  {
+    post: state.postReducer.post,
+  }
+);
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchPostLoadMoreAction: (page, limite) =>
+      dispatch(fetchPostLoadMoreAction(page, limite)),
+    firstfetchPostLoadMoreAction: () =>
+      dispatch(firstfetchPostLoadMoreAction()),
+  };
+};
 
-const HomeScreen = connect(
-  mapStateToProps,
-  {fetchPostAction},
-  // mapDispatchToProps,
-)(Home);
+const HomeScreen = connect(mapStateToProps, mapDispatchToProps)(Home);
 
 export default HomeScreen;

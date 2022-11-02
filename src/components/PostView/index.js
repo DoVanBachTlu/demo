@@ -1,14 +1,14 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useRef } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import React, {useRef} from 'react';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import BottomSheet from 'react-native-js-bottom-sheet';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { connect, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import {connect, useDispatch} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import {
   deletePostAction,
-  fetchPostAction,
-  likeAction
+  fetchPostLoadMoreAction,
+  likeAction,
 } from '../../redux/actions';
 import GroupInfor from '../GroupInfo/index';
 import LikeButton from '../LikeButton';
@@ -18,21 +18,20 @@ const PostView = props => {
   const refBt = useRef();
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  console.log('fetchPostAction', props);
+  console.log('fetchPostLoadMoreAction', props);
   const btnDeletePost = async id => {
     try {
       console.log('delete=>>>', id);
       await props.deletePostAction(id);
-      // props.setCheck(true);
     } catch (error) {
       console.log('deleted error', error);
     }
   };
 
-  btnLike =  (id, like) => {
+  btnLike = (id, like) => {
     try {
       dispatch(likeAction(id, !like));
-      console.log('btnLikeAction', id, like)
+      console.log('btnLikeAction', id, like);
     } catch (error) {
       console.log('btnLike=>', error);
     }
@@ -62,7 +61,6 @@ const PostView = props => {
               onPress: () => {
                 navigation.navigate('PostScreen', {
                   dataEdit: props.data,
-                  setCheck: props.setCheck,
                 });
               },
             },
@@ -140,7 +138,7 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       deletePostAction,
-      fetchPostAction,
+      fetchPostLoadMoreAction,
       likeAction,
     },
     dispatch,

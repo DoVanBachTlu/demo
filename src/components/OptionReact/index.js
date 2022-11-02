@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import LikeButton from './../LikeButton/index';
-import {likeAction, fetchPostAction} from './../../redux/actions';
+import {likeAction, fetchPostLoadMoreAction} from './../../redux/actions';
 import {useDispatch} from 'react-redux';
 import {connect} from 'react-redux';
 import styles from './style';
@@ -9,7 +9,7 @@ import styles from './style';
 const OptionReact = (props) => {
   const [isLiked, setLiked] = useState(false);
   const dispatch = useDispatch();
-  const { fetchPostAction} = props;
+  const { fetchPostLoadMoreAction} = props;
 
   const btnLike = (like) => {
     console.log('bbbbb', like);
@@ -66,7 +66,7 @@ const mapStateToProps = (state) => ({
 
 const postOptionReact = connect(mapStateToProps, {
   likeAction,
-  fetchPostAction
+  fetchPostLoadMoreAction
 })(OptionReact);
 
 export default postOptionReact;

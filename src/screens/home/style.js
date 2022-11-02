@@ -13,9 +13,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   fbLogo: {
-    height: '30%',
-    width: '25%',
-    resizeMode: 'contain',
+    height: 50,
+    width: 100,
+    // resizeMode: 'contain',
     // position: 'absolute',
     left: 0,
   },
@@ -90,7 +90,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   postInfor: {
-    marginTop: Heights / 20,
+    // marginTop: Heights / 20,
+    flex: 1,
   },
 });
 

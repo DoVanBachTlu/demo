@@ -15,7 +15,7 @@ import {BASE_URL} from '../../utilities/index';
 import styles from './style';
 import {
   newPostAction,
-  fetchPostAction,
+  fetchPostLoadMoreAction,
   editPostAction,
 } from '../../redux/actions';
 import {connect} from 'react-redux';
@@ -50,7 +50,7 @@ let dataExample = [
 ];
 
 const PostScreen = props => {
-  const {dataEdit, setCheck} = props.route.params;
+  const {dataEdit} = props.route.params;
   const navigation = useNavigation();
   const [input, setInput] = useState('');
   const [data, setData] = useState([]);
@@ -66,11 +66,11 @@ const PostScreen = props => {
   
   btnNewPost = async () => {
     try {
-      await dispatch(newPostAction(input));
+     dispatch(newPostAction(input));
       // setInput('');
       console.log('created post success');
       navigation.goBack();
-      dispatch(props.fetchPostAction);
+      // dispatch(props.fetchPostLoadMoreAction);
     } catch (error) {
       console.log('posting error');
     }
@@ -80,7 +80,7 @@ const PostScreen = props => {
       await dispatch(editPostAction(dataEdit.id, input));
       console.log('edited success');
       navigation.goBack();
-      dispatch(props.fetchPostAction);
+      dispatch(props.fetchPostLoadMoreAction);
     } catch (error) {
       console.log('edit error', error);
     }
@@ -178,7 +178,7 @@ const Post = connect(
   mapStateToProps,
   {
     newPostAction,
-    fetchPostAction,
+    fetchPostLoadMoreAction,
     editPostAction,
   },
   // mapDispatchToProps,

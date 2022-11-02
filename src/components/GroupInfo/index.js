@@ -45,7 +45,7 @@ const GroupInfor = (props) => {
           </TouchableOpacity>
           <View style={styles.namePerson}>
             <Text style={{fontSize: 12, color: 'silver'}}>
-              Bài viết nhóm của Dương Nhung
+              Bài viết nhóm của Name
             </Text>
             <Text style={{fontSize: 12, color: 'silver'}}>11 giờ</Text>
             <Image
