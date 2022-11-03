@@ -70,8 +70,8 @@ const Widths = Dimensions.get('window').width;
 const Heights = Dimensions.get('window').height;
 // let isLockLoadMore;
 
-const Home = props => {
-  const {post, fetchPostLoadMoreAction} = props;
+const Home = (props) => {
+  const {post} = props;
   const [data, setData] = useState([]);
   console.log('statePost=>>', post);
   const [isLoading, setIsLoading] = useState(false);
@@ -84,7 +84,6 @@ const Home = props => {
     console.log('first1=>');
     try {
       console.log('first2=>');
-      // await dispatch(firstfetchPostLoadMoreAction());
       await props.firstfetchPostLoadMoreAction();
       console.log('first3=>');
       console.log('first4=>');
@@ -98,12 +97,13 @@ const Home = props => {
     try {
       isLockLoadMore.current = true;
       console.log('isLockLoadMore=>', isLockLoadMore.current);
-      // await dispatch(fetchPostLoadMoreAction(pageCurrent, limitPerPage));
       await props.fetchPostLoadMoreAction(pageCurrent, limitPerPage);
       console.log('checkPositionLockLoadMore_1');
       isLockLoadMore.current = false;
+      setIsLoading(false)
       console.log('isLockLoadMore1=>', isLockLoadMore);
     } catch (error) {
+      setIsLoading(false)
       isLockLoadMore.current = false;
       console.log('🚀 ~ file: index.js ~ line 100 ~ loadData ~ error', error);
     }
@@ -117,11 +117,7 @@ const Home = props => {
   useEffect(() => {
     console.log('pageCurrentChange');
     console.log('isLockLoadMore2=>', isLockLoadMore.current);
-    // setIsLoading(true);
-    // isLockLoadMore.current = true;
     loadDataLoadMore();
-    // isLockLoadMore.current = false;
-    // setIsLoading(false);
   }, [pageCurrent]);
 
   const renderFooter = () => {
