@@ -7,7 +7,11 @@ import {
   Keyboard,
   TouchableOpacity,
 } from "react-native";
-import SVGIcon from "../../../../assets/icons";
+import {
+  IconPassword,
+  IconShowPassword,
+  IconUser,
+} from "../../../../assets/icons";
 import React, { useState } from "react";
 import { Colors } from "../../../theme/Colors";
 interface Props {
@@ -21,9 +25,9 @@ interface Props {
 export default function TxtInput(props: Props): React.ReactNode {
   const [hidePassword, setHidePassword] = useState(true);
   return (
-    <View style={{ marginBottom: 20 }}>
+    <View style={styles.wrapContainer}>
       <View style={styles.container}>
-        {props.rightIcon ? <SVGIcon.IconPassword /> : <SVGIcon.IconUser />}
+        {props.rightIcon ? <IconPassword /> : <IconUser />}
         <TextInput
           placeholder={props.placeHolder}
           value={props.value}
@@ -36,7 +40,7 @@ export default function TxtInput(props: Props): React.ReactNode {
         />
         {props.rightIcon ? (
           <TouchableOpacity onPress={() => setHidePassword(!hidePassword)}>
-            <SVGIcon.IconShowPassword />
+            <IconShowPassword />
           </TouchableOpacity>
         ) : null}
       </View>
@@ -60,5 +64,8 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     color: Colors.grey,
     flex: 1,
+  },
+  wrapContainer: {
+    marginBottom: 20,
   },
 });

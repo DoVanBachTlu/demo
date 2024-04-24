@@ -5,6 +5,7 @@ import moment from "moment";
 import CommandCompleteProgress from "../../common/CommandCompleteProgress";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenName } from "../../../navigation/router/ScreenName";
+import { textSizeStyle } from "../../common/TextSize";
 
 interface SelectedFilter {
   id: number;
@@ -131,59 +132,55 @@ export default function ApproveItem(props: Props): React.ReactNode {
       justifyContent: "center",
       marginLeft: 8,
     },
+    statusApprove: { backgroundColor: "#00B4FA", borderRadius: 20 },
+    wrapViewContainer: {
+      backgroundColor: "white",
+      marginBottom: 12,
+      paddingBottom: 12,
+    },
+    textStatusCode: {
+      ...textSizeStyle.small,
+      color: "white",
+    },
+    textLabel: {
+      ...textSizeStyle.normal,
+      color: "black",
+    },
   });
   const WrapView = props.atCommon ? TouchableOpacity : View;
   return (
-    <WrapView
-      style={{
-        backgroundColor: "white",
-        marginBottom: 12,
-        paddingBottom: 12,
-      }}
-      onPress={handlePress}
-    >
+    <WrapView style={styles.wrapViewContainer} onPress={handlePress}>
       {itemInfo.map((item, index) => {
+        const stylesItemInfo = StyleSheet.create({
+          containerItem: {
+            paddingHorizontal:
+              (index === 0 && props.atCommon) || props.atDetail
+                ? distanceHorizontal
+                : 0,
+            marginHorizontal:
+              index !== 0 && props.atCommon ? distanceHorizontal : 0,
+            backgroundColor: item.isBackgroundColor ? "#FAFAFA" : "white",
+          },
+        });
         return (
           <>
             {item.isShow ? (
               <View
-                style={[
-                  styles.container,
-                  {
-                    paddingHorizontal:
-                      (index === 0 && props.atCommon) || props.atDetail
-                        ? distanceHorizontal
-                        : 0,
-                    marginHorizontal:
-                      index !== 0 && props.atCommon ? distanceHorizontal : 0,
-                    backgroundColor: item.isBackgroundColor
-                      ? "#FAFAFA"
-                      : "white",
-                  },
-                ]}
+                style={[styles.container, stylesItemInfo.containerItem]}
                 key={index}
               >
                 {index === 0 ? (
                   <View style={styles.groupItemCode}>
                     <Text style={styles.itemCode}>{item?.label}</Text>
-                    <View
-                      style={[
-                        styles.status,
-                        { backgroundColor: "#00B4FA", borderRadius: 20 },
-                      ]}
-                    >
-                      <Text style={{ fontSize: 12, color: "white" }}>
-                        {item?.status}
-                      </Text>
+                    <View style={[styles.status, styles.statusApprove]}>
+                      <Text style={styles.textStatusCode}>{item?.status}</Text>
                     </View>
                   </View>
                 ) : (
-                  <Text style={{ fontSize: 14, color: "black" }}>
-                    {item?.label}
-                  </Text>
+                  <Text style={styles.textLabel}>{item?.label}</Text>
                 )}
 
-                <Text style={{ fontSize: 14 }}>{item?.info}</Text>
+                <Text style={textSizeStyle.normal}>{item?.info}</Text>
               </View>
             ) : null}
 

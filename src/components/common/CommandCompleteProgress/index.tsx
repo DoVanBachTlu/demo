@@ -15,26 +15,19 @@ export default function CommandCompleteProgress(props: Props): React.ReactNode {
     },
     completeProgress: {
       width: `${props.completePercent}%`,
-      backgroundColor: "red",
       flex: 1,
       borderRadius: 8,
+      backgroundColor:
+        props.completePercent == 100
+          ? "green"
+          : props.completePercent < 100 && props.completePercent >= 50
+          ? "#EAA300"
+          : "red",
     },
   });
   return (
     <View style={styles.container}>
-      <View
-        style={[
-          styles.completeProgress,
-          {
-            backgroundColor:
-              props.completePercent == 100
-                ? "green"
-                : props.completePercent < 100 && props.completePercent >= 50
-                ? "#EAA300"
-                : "red",
-          },
-        ]}
-      />
+      <View style={styles.completeProgress} />
     </View>
   );
 }

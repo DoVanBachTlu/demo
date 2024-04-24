@@ -1,6 +1,5 @@
 import {
   ImageBackground,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
@@ -12,10 +11,19 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { distanceHorizontal } from "../../utils/Define";
-import SVGIcon from "../../../assets/icons";
+import {
+  IconAccount,
+  IconApprove,
+  IconHand,
+  IconNoti,
+  IconTranport,
+  IconUploadFile,
+} from "../../../assets/icons";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenName } from "../../navigation/router/ScreenName";
 import { useBackHandler } from "@react-native-community/hooks";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { textSizeStyle } from "../../components/common/TextSize";
 
 const windowWidth = Dimensions.get("window").width;
 const distanceBetweenCategory = 20;
@@ -29,7 +37,13 @@ export default function Home(): React.ReactNode {
       "hardwareBackPress",
       handleBackPress
     );
-    return () => backHandler.remove();
+    const timerId = setTimeout(() => {
+      setBackPressedOnce(false);
+    }, 2000);
+    return () => {
+      backHandler.remove();
+      clearTimeout(timerId);
+    };
   }, [backPressedOnce]);
   const handleBackPress = () => {
     if (!backPressedOnce) {
@@ -46,19 +60,19 @@ export default function Home(): React.ReactNode {
   };
   const listCategories = [
     {
-      icon: SVGIcon.IconTranport,
+      icon: IconTranport,
       label: "Vận chuyển",
       onPress: () => {},
     },
     {
-      icon: SVGIcon.IconApprove,
+      icon: IconApprove,
       label: "Phê duyệt",
       onPress: () => {
         navigation.navigate(ScreenName.approve);
       },
     },
     {
-      icon: SVGIcon.IconUploadFile,
+      icon: IconUploadFile,
       label: "Upload File",
       onPress: () => {},
     },
@@ -74,7 +88,6 @@ export default function Home(): React.ReactNode {
       flex: 1,
       alignItems: "center",
       justifyContent: "center",
-      marginTop: StatusBar.currentHeight,
     },
     imgBg: {
       flex: 1,
@@ -116,6 +129,18 @@ export default function Home(): React.ReactNode {
       borderColor: "#00000016",
       borderWidth: 1,
     },
+    wrapViewInfoCommon: { flexDirection: "row", flexShrink: 1 },
+    wrapViewHello: { flex: 1, marginHorizontal: 12 },
+    flexRow: {
+      flexDirection: "row",
+    },
+    txtHello: { ...textSizeStyle.normal, color: "white" },
+    txtWhiteBold: { fontWeight: "bold", color: "white" },
+    txtTitle: {
+      ...textSizeStyle.biggest,
+      fontWeight: "600",
+    },
+    txtLabelCategory: { ...textSizeStyle.small, marginTop: 12 },
   });
   return (
     <SafeAreaView style={styles.container}>
@@ -124,19 +149,16 @@ export default function Home(): React.ReactNode {
         source={require("../../../assets/background.jpg")}
       >
         <View style={styles.header}>
-          <View style={{ flexDirection: "row", flexShrink: 1 }}>
+          <View style={styles.wrapViewInfoCommon}>
             <TouchableOpacity>
-              <SVGIcon.IconAccount />
+              <IconAccount />
             </TouchableOpacity>
-            <View style={{ flex: 1, marginHorizontal: 12 }}>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={{ color: "white", fontSize: 14 }}>Xin chào, </Text>
-                <SVGIcon.IconHand />
+            <View style={styles.wrapViewHello}>
+              <View style={styles.flexRow}>
+                <Text style={styles.txtHello}>Xin chào, </Text>
+                <IconHand />
               </View>
-              <Text
-                style={{ fontWeight: "bold", color: "white" }}
-                numberOfLines={1}
-              >
+              <Text style={styles.txtWhiteBold} numberOfLines={1}>
                 NGUYEN VAN QUOC NGUYEN VAN QUOCNGUYEN VAN QUOCNGUYEN VAN
                 QUOCNGUYEN VAN QUOCNGUYEN VAN QUOCNGUYEN VAN QUOCNGUYEN VAN
                 QUOCNGUYEN VAN QUOCNGUYEN VAN QUOC
@@ -144,11 +166,11 @@ export default function Home(): React.ReactNode {
             </View>
           </View>
           <TouchableOpacity>
-            <SVGIcon.IconNoti />
+            <IconNoti />
           </TouchableOpacity>
         </View>
         <View style={styles.viewCategory}>
-          <Text style={{ fontSize: 24, fontWeight: "600" }}>Danh mục</Text>
+          <Text style={styles.txtTitle}>Danh mục</Text>
           <View style={styles.listCategoriesView}>
             {listCategories?.map((item, index) => {
               return (
@@ -158,9 +180,7 @@ export default function Home(): React.ReactNode {
                   style={styles.categoryBtn}
                 >
                   <item.icon />
-                  <Text style={{ fontSize: 12, marginTop: 12 }}>
-                    {item.label}
-                  </Text>
+                  <Text style={styles.txtLabelCategory}>{item.label}</Text>
                 </TouchableOpacity>
               );
             })}

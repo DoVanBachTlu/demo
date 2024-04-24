@@ -7,8 +7,9 @@ import {
 } from "react-native";
 import React from "react";
 import { distanceHorizontal } from "../../../utils/Define";
-import SVGIcon from "../../../../assets/icons";
+import { IconArrowBack } from "../../../../assets/icons";
 import { CommonActions, useNavigation } from "@react-navigation/native";
+import { textSizeStyle } from "../TextSize";
 
 interface Props {
   headerTitle?: string;
@@ -24,7 +25,7 @@ export default function Header(props: Props): React.ReactNode {
           navigation.dispatch(CommonActions.goBack());
         }}
       >
-        <SVGIcon.IconArrowBack />
+        <IconArrowBack />
       </TouchableOpacity>
       <Text style={styles.title} numberOfLines={1}>
         {props.headerTitle}
@@ -38,10 +39,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: distanceHorizontal,
     backgroundColor: "white",
-    paddingTop: StatusBar.currentHeight,
   },
   title: {
-    fontSize: 20,
+    ...textSizeStyle.biggest,
     fontWeight: "600",
     flexShrink: 1,
   },

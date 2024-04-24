@@ -15,6 +15,8 @@ import { distanceHorizontal } from "../../utils/Define";
 import { Colors } from "../../theme/Colors";
 import { ListApprove } from "../../data/ListApprove";
 import { ListFilterApprove } from "../../data/ListFilterApprove";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { textSizeStyle } from "../../components/common/TextSize";
 
 export default function Approve(): React.ReactNode {
   const [selectedFilterItem, setSelectFilterItem] = useState(
@@ -35,9 +37,9 @@ export default function Approve(): React.ReactNode {
     setLoading(false);
   }, [selectedFilterItem]);
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header headerTitle="Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt" />
-      <View style={{ marginBottom: 10 }}>
+      <View style={styles.listFilter}>
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -60,12 +62,14 @@ export default function Approve(): React.ReactNode {
               >
                 <Text
                   numberOfLines={1}
-                  style={{
-                    fontSize: 12,
-                    fontWeight: "bold",
-                    color:
-                      selectedFilterItem?.id === item?.id ? "white" : "black",
-                  }}
+                  style={[
+                    {
+                      fontWeight: "bold",
+                      color:
+                        selectedFilterItem?.id === item?.id ? "white" : "black",
+                    },
+                    textSizeStyle.small,
+                  ]}
                 >
                   {item?.label}
                 </Text>
@@ -96,15 +100,11 @@ export default function Approve(): React.ReactNode {
           }}
         />
       ) : (
-        <View
-          style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
-        >
-          <Text style={{ fontSize: 16, fontWeight: "600" }}>
-            Chưa có dữ liệu
-          </Text>
+        <View style={styles.emptyStatus}>
+          <Text>Chưa có dữ liệu</Text>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -133,5 +133,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  listFilter: {
+    marginBottom: 10,
+  },
+  emptyStatus: { alignItems: "center", justifyContent: "center", flex: 1 },
+  textEmpty: {
+    ...textSizeStyle.large,
+    fontWeight: "600",
   },
 });

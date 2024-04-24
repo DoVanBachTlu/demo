@@ -15,6 +15,7 @@ import { Colors } from "../../theme/Colors";
 import ApproveItem from "../../components/element/ApproveItem";
 import { STATUS_APPROVE, distanceHorizontal } from "../../utils/Define";
 import moment from "moment";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface RouteParams {
   selectedFilter?: {
@@ -61,34 +62,30 @@ export default function ApproveDetail(): React.ReactNode {
     return (
       <View style={styles.subCommandWrap}>
         {subCommand.map((item, index) => {
+          const stylesSubCommand = StyleSheet.create({
+            wrapSubCommand: {
+              marginHorizontal: index === 0 ? 0 : 16,
+              paddingHorizontal: index === 0 ? 16 : 0,
+              borderBottomWidth: index === subCommand.length - 1 ? 0 : 1,
+              borderBottomColor:
+                index === subCommand.length - 1 ? null : "#E0E0E0",
+            },
+            textCodeSubCommand: {
+              color: index === 0 ? Colors.bgButtonApprove : "#575757",
+            },
+            textStatusSubCommand: { color: "white" },
+          });
           return (
             <View
-              style={[
-                styles.subCommandView,
-                {
-                  marginHorizontal: index === 0 ? 0 : 16,
-                  paddingHorizontal: index === 0 ? 16 : 0,
-                  borderBottomWidth: index === subCommand.length - 1 ? 0 : 1,
-                  borderBottomColor:
-                    index === subCommand.length - 1 ? null : "#E0E0E0",
-                },
-              ]}
+              style={[styles.subCommandView, stylesSubCommand.wrapSubCommand]}
               key={index}
             >
-              <Text
-                style={{
-                  color: index === 0 ? Colors.bgButtonApprove : "#575757",
-                }}
-              >
+              <Text style={stylesSubCommand.textCodeSubCommand}>
                 {item?.label}
               </Text>
               {index === 0 ? (
                 <View style={styles.subCommandCode}>
-                  <Text
-                    style={{
-                      color: "white",
-                    }}
-                  >
+                  <Text style={stylesSubCommand.textStatusSubCommand}>
                     {item?.info}
                   </Text>
                 </View>
@@ -102,7 +99,7 @@ export default function ApproveDetail(): React.ReactNode {
     );
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Header headerTitle={`Chi tiết ${selectedFilter?.label}`} />
       </View>
@@ -126,15 +123,13 @@ export default function ApproveDetail(): React.ReactNode {
           )}
         </ScrollView>
         <View style={styles.wrapViewButton}>
-          <TouchableOpacity
-            style={[styles.btnFooter, { backgroundColor: "#EAA300" }]}
-          >
-            <Text style={{ color: "black", fontWeight: "600" }}>Khởi hành</Text>
+          <TouchableOpacity style={[styles.btnFooter, styles.bgColorStartBtn]}>
+            <Text style={styles.txtStart}>Khởi hành</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.btnFooter, { backgroundColor: "red" }]}
           >
-            <Text style={{ color: "white", fontWeight: "600" }}>Từ chối</Text>
+            <Text style={styles.txtWhiteBold}>Từ chối</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -142,11 +137,11 @@ export default function ApproveDetail(): React.ReactNode {
               { backgroundColor: Colors.bgButtonApprove },
             ]}
           >
-            <Text style={{ color: "white", fontWeight: "600" }}>Phê duyệt</Text>
+            <Text style={styles.txtWhiteBold}>Phê duyệt</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -203,4 +198,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 20,
   },
+  bgColorStartBtn: {
+    backgroundColor: "#EAA300",
+  },
+  txtStart: { color: "black", fontWeight: "600" },
+  txtWhiteBold: { color: "white", fontWeight: "600" },
 });
