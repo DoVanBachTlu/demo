@@ -1,4 +1,6 @@
 export const ScreenName = {
     home: 'home',
-    login: 'login'
+    login: 'login',
+    approve:'approve',
+    approveDetail:'approveDetail'
 }

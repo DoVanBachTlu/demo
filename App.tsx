@@ -44,6 +44,14 @@ export default function App(): React.ReactNode {
           name={Routers.home.name}
           component={Routers.home.commponent}
         />
+        <Stack.Screen
+          name={Routers.approve.name}
+          component={Routers.approve.component}
+        />
+        <Stack.Screen
+          name={Routers.approveDetail.name}
+          component={Routers.approveDetail.component}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
