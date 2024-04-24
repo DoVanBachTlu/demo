@@ -47,30 +47,25 @@ export default function Approve(): React.ReactNode {
           data={ListFilterApprove}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => {
+            const itemFilterStyles = StyleSheet.create({
+              item: {
+                marginLeft: index === 0 ? distanceHorizontal : 0,
+                backgroundColor:
+                  selectedFilterItem?.id === item?.id ? "#0F6CBD" : "white",
+              },
+              txtLabelFilter: {
+                ...textSizeStyle.small,
+                fontWeight: "bold",
+                color: selectedFilterItem?.id === item?.id ? "white" : "black",
+              },
+            });
             return (
               <TouchableOpacity
-                style={[
-                  styles.itemFilter,
-                  {
-                    marginLeft: index === 0 ? distanceHorizontal : 0,
-                    backgroundColor:
-                      selectedFilterItem?.id === item?.id ? "#0F6CBD" : "white",
-                  },
-                ]}
+                style={[styles.itemFilter, itemFilterStyles.item]}
                 key={index}
                 onPress={() => handleFilter(item)}
               >
-                <Text
-                  numberOfLines={1}
-                  style={[
-                    {
-                      fontWeight: "bold",
-                      color:
-                        selectedFilterItem?.id === item?.id ? "white" : "black",
-                    },
-                    textSizeStyle.small,
-                  ]}
-                >
+                <Text numberOfLines={1} style={itemFilterStyles.txtLabelFilter}>
                   {item?.label}
                 </Text>
               </TouchableOpacity>

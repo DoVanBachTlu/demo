@@ -8,6 +8,7 @@ import {
   Dimensions,
   ToastAndroid,
   BackHandler,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { distanceHorizontal } from "../../utils/Define";
@@ -27,23 +28,25 @@ import { textSizeStyle } from "../../components/common/TextSize";
 
 const windowWidth = Dimensions.get("window").width;
 const distanceBetweenCategory = 20;
-
+const maxItemsPerRow = 3;
 export default function Home(): React.ReactNode {
   const [backPressedOnce, setBackPressedOnce] = useState(false);
 
   const navigation = useNavigation();
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      handleBackPress
-    );
-    const timerId = setTimeout(() => {
-      setBackPressedOnce(false);
-    }, 2000);
-    return () => {
-      backHandler.remove();
-      clearTimeout(timerId);
-    };
+    if (Platform.OS === "android") {
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        handleBackPress
+      );
+      const timerId = setTimeout(() => {
+        setBackPressedOnce(false);
+      }, 2000);
+      return () => {
+        backHandler.remove();
+        clearTimeout(timerId);
+      };
+    }
   }, [backPressedOnce]);
   const handleBackPress = () => {
     if (!backPressedOnce) {
@@ -76,13 +79,17 @@ export default function Home(): React.ReactNode {
       label: "Upload File",
       onPress: () => {},
     },
+    {
+      icon: IconUploadFile,
+      label: "Upload File",
+      onPress: () => {},
+    },
   ];
-  const lengthListCategories = listCategories.length;
   const sizeCategoryButton =
     (windowWidth -
       distanceHorizontal * 2 -
-      (lengthListCategories - 1) * distanceBetweenCategory) /
-    lengthListCategories;
+      (maxItemsPerRow - 1) * distanceBetweenCategory) /
+    maxItemsPerRow;
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -116,9 +123,9 @@ export default function Home(): React.ReactNode {
     },
     listCategoriesView: {
       flexDirection: "row",
-      marginTop: 24,
       alignItems: "center",
       justifyContent: "space-around",
+      flexWrap: "wrap",
     },
     categoryBtn: {
       alignItems: "center",
@@ -128,6 +135,7 @@ export default function Home(): React.ReactNode {
       borderRadius: 20,
       borderColor: "#00000016",
       borderWidth: 1,
+      marginTop: distanceBetweenCategory,
     },
     wrapViewInfoCommon: { flexDirection: "row", flexShrink: 1 },
     wrapViewHello: { flex: 1, marginHorizontal: 12 },
@@ -141,6 +149,9 @@ export default function Home(): React.ReactNode {
       fontWeight: "600",
     },
     txtLabelCategory: { ...textSizeStyle.small, marginTop: 12 },
+    viewtxtCategoryTitle: {
+      marginBottom: 24,
+    },
   });
   return (
     <SafeAreaView style={styles.container}>
@@ -170,7 +181,9 @@ export default function Home(): React.ReactNode {
           </TouchableOpacity>
         </View>
         <View style={styles.viewCategory}>
-          <Text style={styles.txtTitle}>Danh mục</Text>
+          <View style={styles.viewtxtCategoryTitle}>
+            <Text style={styles.txtTitle}>Danh mục</Text>
+          </View>
           <View style={styles.listCategoriesView}>
             {listCategories?.map((item, index) => {
               return (
