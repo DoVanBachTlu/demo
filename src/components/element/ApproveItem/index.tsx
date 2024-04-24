@@ -47,6 +47,7 @@ export default function ApproveItem(props: Props): React.ReactNode {
       label: "Lái xe",
       info: props.dataItem.driver,
       isShow: props.atCommon || props.atDetail,
+      isBackgroundColor: props.atDetail,
     },
     {
       label: "Loại xe",
@@ -62,6 +63,7 @@ export default function ApproveItem(props: Props): React.ReactNode {
       label: "Cán bộ kho quỹ",
       info: props.dataItem.treasuryOfficer,
       isShow: props.atDetail,
+      isBackgroundColor: props.atDetail,
     },
     {
       label: "An ninh bảo vệ",
@@ -72,6 +74,7 @@ export default function ApproveItem(props: Props): React.ReactNode {
       label: "Điểm xuất phát",
       info: props.dataItem.startPoint,
       isShow: props.atDetail,
+      isBackgroundColor: props.atDetail,
     },
     {
       label: "Ngày khởi hành",
@@ -82,6 +85,7 @@ export default function ApproveItem(props: Props): React.ReactNode {
       label: "Ngày hoàn thành",
       info: moment(props.dataItem.completeDate).format("DD/MM/YYYY"),
       isShow: props.atDetail,
+      isBackgroundColor: props.atDetail,
     },
     {
       label: "Biển số",
@@ -152,8 +156,9 @@ export default function ApproveItem(props: Props): React.ReactNode {
                         : 0,
                     marginHorizontal:
                       index !== 0 && props.atCommon ? distanceHorizontal : 0,
-                    backgroundColor:
-                      props.atDetail && index % 2 !== 0 ? "#FAFAFA" : "white",
+                    backgroundColor: item.isBackgroundColor
+                      ? "#FAFAFA"
+                      : "white",
                   },
                 ]}
                 key={index}
