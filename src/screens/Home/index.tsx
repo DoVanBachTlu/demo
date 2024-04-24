@@ -7,19 +7,43 @@ import {
   TouchableOpacity,
   View,
   Dimensions,
+  ToastAndroid,
+  BackHandler,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { distanceHorizontal } from "../../utils/Define";
 import SVGIcon from "../../../assets/icons";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenName } from "../../navigation/router/ScreenName";
+import { useBackHandler } from "@react-native-community/hooks";
 
 const windowWidth = Dimensions.get("window").width;
 const distanceBetweenCategory = 20;
 
 export default function Home(): React.ReactNode {
-  const navigation = useNavigation();
+  const [backPressedOnce, setBackPressedOnce] = useState(false);
 
+  const navigation = useNavigation();
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      handleBackPress
+    );
+    return () => backHandler.remove();
+  }, [backPressedOnce]);
+  const handleBackPress = () => {
+    if (!backPressedOnce) {
+      setBackPressedOnce(true);
+      ToastAndroid.show(
+        "Ấn nút Back lần nữa để thoát ứng dụng",
+        ToastAndroid.SHORT
+      );
+      return true;
+    } else {
+      BackHandler.exitApp();
+      return true;
+    }
+  };
   const listCategories = [
     {
       icon: SVGIcon.IconTranport,

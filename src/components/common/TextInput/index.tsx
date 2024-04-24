@@ -21,28 +21,26 @@ interface Props {
 export default function TxtInput(props: Props): React.ReactNode {
   const [hidePassword, setHidePassword] = useState(true);
   return (
-    <TouchableWithoutFeedback onPressIn={Keyboard.dismiss} accessible={false}>
-      <View style={{ marginBottom: 20 }}>
-        <View style={styles.container}>
-          {props.rightIcon ? <SVGIcon.IconPassword /> : <SVGIcon.IconUser />}
-          <TextInput
-            placeholder={props.placeHolder}
-            value={props.value}
-            onChangeText={props.setValue}
-            style={styles.txtInput}
-            placeholderTextColor={Colors.grey}
-            secureTextEntry={
-              props.isPassword ? (hidePassword ? true : false) : false
-            }
-          />
-          {props.rightIcon ? (
-            <TouchableOpacity onPress={() => setHidePassword(!hidePassword)}>
-              <SVGIcon.IconShowPassword />
-            </TouchableOpacity>
-          ) : null}
-        </View>
+    <View style={{ marginBottom: 20 }}>
+      <View style={styles.container}>
+        {props.rightIcon ? <SVGIcon.IconPassword /> : <SVGIcon.IconUser />}
+        <TextInput
+          placeholder={props.placeHolder}
+          value={props.value}
+          onChangeText={props.setValue}
+          style={styles.txtInput}
+          placeholderTextColor={Colors.grey}
+          secureTextEntry={
+            props.isPassword ? (hidePassword ? true : false) : false
+          }
+        />
+        {props.rightIcon ? (
+          <TouchableOpacity onPress={() => setHidePassword(!hidePassword)}>
+            <SVGIcon.IconShowPassword />
+          </TouchableOpacity>
+        ) : null}
       </View>
-    </TouchableWithoutFeedback>
+    </View>
   );
 }
 

@@ -1,11 +1,13 @@
 import {
   Alert,
   Image,
+  Keyboard,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import React, { useState } from "react";
@@ -59,59 +61,64 @@ export default function Login(): React.ReactNode {
   };
   console.log("selectedSaveLogin", selectedSaveLogin);
   return (
-    <View style={styles.container}>
-      <View style={styles.mainView}>
-        <Image
-          style={styles.imgLogo}
-          source={require("../../../assets/logo.png")}
-        />
-        <Text style={styles.title}>Hệ thống FlexCash</Text>
-        <TextInput
-          placeHolder={"Tài khoản"}
-          value={accountName}
-          setValue={(text: string) => setAccountName(text)}
-        />
-        <TextInput
-          rightIcon
-          placeHolder={"Mật khẩu"}
-          isPassword
-          value={password}
-          setValue={(text: string) => setPassword(text)}
-        />
-        <View style={styles.saveLogin}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <View style={styles.mainView}>
+          <Image
+            style={styles.imgLogo}
+            source={require("../../../assets/logo.png")}
+          />
+          <Text style={styles.title}>Hệ thống FlexCash</Text>
+          <TextInput
+            placeHolder={"Tài khoản"}
+            value={accountName}
+            setValue={(text: string) => setAccountName(text)}
+          />
+          <TextInput
+            rightIcon
+            placeHolder={"Mật khẩu"}
+            isPassword
+            value={password}
+            setValue={(text: string) => setPassword(text)}
+          />
+          <View style={styles.saveLogin}>
+            <TouchableOpacity
+              style={[
+                styles.selectBox,
+                {
+                  backgroundColor: selectedSaveLogin
+                    ? Colors.bgButtonApprove
+                    : null,
+                },
+              ]}
+              onPress={() => setSelectedSaveLogin(!selectedSaveLogin)}
+            >
+              <SVGIcon.IconSelected
+                style={{ opacity: selectedSaveLogin ? 1 : 0 }}
+              />
+            </TouchableOpacity>
+            <Text>Lưu thông tin đăng nhập</Text>
+            <View style={{ flex: 1 }} />
+          </View>
           <TouchableOpacity
-            style={[
-              styles.selectBox,
-              {
-                backgroundColor: selectedSaveLogin
-                  ? Colors.bgButtonApprove
-                  : null,
-              },
-            ]}
-            onPress={() => setSelectedSaveLogin(!selectedSaveLogin)}
+            style={styles.btnLogin}
+            onPress={() => handleLogin()}
           >
-            <SVGIcon.IconSelected
-              style={{ opacity: selectedSaveLogin ? 1 : 0 }}
-            />
+            <Text style={{ fontWeight: "bold", fontSize: 16, color: "white" }}>
+              Đăng nhập
+            </Text>
           </TouchableOpacity>
-          <Text>Lưu thông tin đăng nhập</Text>
-          <View style={{ flex: 1 }} />
         </View>
-        <TouchableOpacity style={styles.btnLogin} onPress={() => handleLogin()}>
-          <Text style={{ fontWeight: "bold", fontSize: 16, color: "white" }}>
-            Đăng nhập
+        <View style={styles.footer}>
+          <Text style={{ color: Colors.bgButtonApprove, fontSize: 14 }}>
+            FlexCash{" "}
           </Text>
-        </TouchableOpacity>
+          <Text style={{ color: Colors.grey, fontSize: 14 }}>
+            - Version 1.2.6.8
+          </Text>
+        </View>
       </View>
-      <View style={styles.footer}>
-        <Text style={{ color: Colors.bgButtonApprove, fontSize: 14 }}>
-          FlexCash{" "}
-        </Text>
-        <Text style={{ color: Colors.grey, fontSize: 14 }}>
-          - Version 1.2.6.8
-        </Text>
-      </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
