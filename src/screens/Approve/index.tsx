@@ -18,24 +18,33 @@ import { ListFilterApprove } from "../../data/ListFilterApprove";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { textSizeStyle } from "../../components/common/TextSize";
 
+const limitPerPage = 5;
 export default function Approve(): React.ReactNode {
   const [selectedFilterItem, setSelectFilterItem] = useState(
     ListFilterApprove[0]
   );
   const [dataApproveFiltered, setDataApproveFiltered] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [visibleDataCount, setVisibleDataCount] = useState(limitPerPage);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const handleFilter = (item: any) => {
     setLoading(true);
     setSelectFilterItem(item);
   };
+  const loadMoreData = () => {
+    setIsLoadingMore(true);
+    setVisibleDataCount((prevCount) => prevCount + limitPerPage);
+  };
   useEffect(() => {
-    console.log("useEffect-->", selectedFilterItem);
     const filteredData = ListApprove.filter(
       (item) => item?.parentId === selectedFilterItem?.id
     );
     setDataApproveFiltered(filteredData);
     setLoading(false);
+    setIsLoadingMore(false);
+    setVisibleDataCount(limitPerPage);
   }, [selectedFilterItem]);
+
   return (
     <SafeAreaView style={styles.container}>
       <Header headerTitle="Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt" />
@@ -82,7 +91,7 @@ export default function Approve(): React.ReactNode {
           keyExtractor={(item, index) => index.toString()}
           showsVerticalScrollIndicator={false}
           style={styles.styleFll}
-          data={dataApproveFiltered}
+          data={dataApproveFiltered.slice(0, visibleDataCount)}
           renderItem={({ item, index }) => {
             return (
               <ApproveItem
@@ -93,6 +102,19 @@ export default function Approve(): React.ReactNode {
               />
             );
           }}
+          onEndReached={loadMoreData}
+          ListFooterComponent={() => {
+            return isLoadingMore &&
+              dataApproveFiltered.length > visibleDataCount ? (
+              <View style={styles.loadingFooter}>
+                <ActivityIndicator
+                  size="small"
+                  color={Colors.bgButtonApprove}
+                />
+              </View>
+            ) : null;
+          }}
+          onEndReachedThreshold={0.1}
         />
       ) : (
         <View style={styles.emptyStatus}>
@@ -136,5 +158,8 @@ const styles = StyleSheet.create({
   textEmpty: {
     ...textSizeStyle.large,
     fontWeight: "600",
+  },
+  loadingFooter: {
+    paddingVertical: 20,
   },
 });

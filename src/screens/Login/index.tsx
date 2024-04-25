@@ -1,30 +1,25 @@
+import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
   Image,
   Keyboard,
   SafeAreaView,
-  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import { distanceHorizontal } from "../../utils/Define";
-import { Colors } from "../../theme/Colors";
-import useAllFonts from "../../hook/useAllFonts";
-import TextInput from "../../components/common/TextInput";
-import { IconSelected } from "../../../assets/icons";
-import { useNavigation } from "@react-navigation/native";
-import { ScreenName } from "../../navigation/router/ScreenName";
-import {
-  localStorageModule,
-  localStorageName,
-} from "../../modules/AsyncStorage";
 import { useDispatch, useSelector } from "react-redux";
-import { saveCredentials } from "../../sliceRedux/Authen";
+import { IconSelected } from "../../../assets/icons";
+import TextInput from "../../components/common/TextInput";
 import { textSizeStyle } from "../../components/common/TextSize";
+import useAllFonts from "../../hook/useAllFonts";
+import { ScreenName } from "../../navigation/router/ScreenName";
+import { saveCredentials } from "../../sliceRedux/Authen";
+import { Colors } from "../../theme/Colors";
+import { distanceHorizontal } from "../../utils/Define";
 const widthImgLogo = 248;
 const ratioImgLogo = 248 / 71;
 const heightImgLogo = widthImgLogo * (1 / ratioImgLogo);
@@ -45,30 +40,26 @@ export default function Login(): React.ReactNode {
     setAccountName(credential.savedAccount);
     setPassword(credential.savedPassword);
   }, [credential]);
-
   const handleLogin = () => {
     const realAccountName = accountName?.trim();
-    const reallPassword = password?.trim();
-    if (realAccountName?.length === 0 || reallPassword?.length === 0) {
+    const realPassword = password?.trim();
+    if (realAccountName?.length === 0 || realPassword?.length === 0) {
       Alert.alert("Nhập đầy đủ tài khoản và mật khẩu");
       return;
     }
-    if (realAccountName !== accountValue || reallPassword !== passwordValue) {
+    if (realAccountName !== accountValue || realPassword !== passwordValue) {
       Alert.alert("Tài khoản là admin, mật khẩu là password");
       return;
     }
     if (selectedSaveLogin) {
       dispatch(saveCredentials({ accountValue, passwordValue }));
     }
-
     navigation.navigate(ScreenName.home);
     return;
   };
-
   if (!fontsLoaded) {
     return null;
   }
-  console.log("selectedSaveLogin", selectedSaveLogin);
   const styles = StyleSheet.create({
     container: {
       flex: 1,

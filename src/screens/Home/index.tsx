@@ -1,17 +1,17 @@
+import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
 import {
+  BackHandler,
+  Dimensions,
   ImageBackground,
-  StatusBar,
+  Platform,
   StyleSheet,
   Text,
+  ToastAndroid,
   TouchableOpacity,
   View,
-  Dimensions,
-  ToastAndroid,
-  BackHandler,
-  Platform,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import { distanceHorizontal } from "../../utils/Define";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   IconAccount,
   IconApprove,
@@ -20,11 +20,9 @@ import {
   IconTranport,
   IconUploadFile,
 } from "../../../assets/icons";
-import { useNavigation } from "@react-navigation/native";
-import { ScreenName } from "../../navigation/router/ScreenName";
-import { useBackHandler } from "@react-native-community/hooks";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { textSizeStyle } from "../../components/common/TextSize";
+import { ScreenName } from "../../navigation/router/ScreenName";
+import { distanceHorizontal } from "../../utils/Define";
 
 const windowWidth = Dimensions.get("window").width;
 const distanceBetweenCategory = 20;
