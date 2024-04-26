@@ -1,11 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { STATUS_APPROVE, distanceHorizontal } from "../../../utils/Define";
+import { STATUS_APPROVE, distanceHorizontal } from "@utils/Define";
 import moment from "moment";
-import CommandCompleteProgress from "../../common/CommandCompleteProgress";
+import CommandCompleteProgress from "@commonComponent/CommandCompleteProgress";
 import { useNavigation } from "@react-navigation/native";
-import { ScreenName } from "../../../navigation/router/ScreenName";
-import { textSizeStyle } from "../../common/TextSize";
+import { ScreenName } from "@navigation/router/ScreenName";
+import { textSizeStyle } from "@commonComponent/TextSize";
 
 interface SelectedFilter {
   id: number;
@@ -22,7 +22,7 @@ interface Props {
     vehicleType?: string;
     licensePlate?: string;
     commandTotal?: number;
-    commandComplelte?: number;
+    commandComplete?: number;
     treasuryOfficer?: string;
     securityProtection?: string;
     startPoint?: string;
@@ -95,7 +95,7 @@ export default function ApproveItem(props: Props): React.ReactNode {
     },
     {
       label: "Số lệnh hoàn thành",
-      info: `${props.dataItem.commandComplelte}/${props.dataItem.commandTotal}`,
+      info: `${props.dataItem.commandComplete}/${props.dataItem.commandTotal}`,
       isShow: props.atCommon,
     },
   ];
@@ -187,7 +187,7 @@ export default function ApproveItem(props: Props): React.ReactNode {
             {index === itemInfo.length - 1 && item.isShow ? (
               <CommandCompleteProgress
                 completePercent={
-                  (props.dataItem.commandComplelte /
+                  (props.dataItem.commandComplete /
                     props.dataItem.commandTotal) *
                   100
                 }

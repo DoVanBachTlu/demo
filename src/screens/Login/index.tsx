@@ -12,14 +12,14 @@ import {
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { IconSelected } from "../../../assets/icons";
-import TextInput from "../../components/common/TextInput";
-import { textSizeStyle } from "../../components/common/TextSize";
-import useAllFonts from "../../hook/useAllFonts";
-import { ScreenName } from "../../navigation/router/ScreenName";
-import { saveCredentials } from "../../sliceRedux/Authen";
-import { Colors } from "../../theme/Colors";
-import { distanceHorizontal } from "../../utils/Define";
+import { IconSelected } from "@assets/icons";
+import TextInput from "@commonComponent/TextInput";
+import { textSizeStyle } from "@commonComponent/TextSize";
+import useAllFonts from "@hook/useAllFonts";
+import { ScreenName } from "@navigation/router/ScreenName";
+import { saveCredentials } from "@sliceRedux/Authen";
+import { Colors } from "@theme/Colors";
+import { distanceHorizontal } from "@utils/Define";
 const widthImgLogo = 248;
 const ratioImgLogo = 248 / 71;
 const heightImgLogo = widthImgLogo * (1 / ratioImgLogo);

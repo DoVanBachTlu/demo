@@ -9,14 +9,14 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import Header from "../../components/common/Header";
-import ApproveItem from "../../components/element/ApproveItem";
-import { distanceHorizontal } from "../../utils/Define";
-import { Colors } from "../../theme/Colors";
-import { ListApprove } from "../../data/ListApprove";
-import { ListFilterApprove } from "../../data/ListFilterApprove";
+import Header from "@commonComponent/Header";
+import ApproveItem from "@components/element/ApproveItem";
+import { distanceHorizontal } from "@utils/Define";
+import { Colors } from "@theme/Colors";
+import { ListApprove } from "@dataFake/ListApprove";
+import { ListFilterApprove } from "@dataFake/ListFilterApprove";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { textSizeStyle } from "../../components/common/TextSize";
+import { textSizeStyle } from "@commonComponent/TextSize";
 
 const limitPerPage = 5;
 export default function Approve(): React.ReactNode {

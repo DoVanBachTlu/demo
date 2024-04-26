@@ -19,10 +19,10 @@ import {
   IconNoti,
   IconTranport,
   IconUploadFile,
-} from "../../../assets/icons";
-import { textSizeStyle } from "../../components/common/TextSize";
-import { ScreenName } from "../../navigation/router/ScreenName";
-import { distanceHorizontal } from "../../utils/Define";
+} from "@assets/icons";
+import { textSizeStyle } from "@commonComponent/TextSize";
+import { ScreenName } from "@navigation/router/ScreenName";
+import { distanceHorizontal } from "@utils/Define";
 
 const windowWidth = Dimensions.get("window").width;
 const distanceBetweenCategory = 20;

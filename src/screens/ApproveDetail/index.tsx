@@ -9,11 +9,11 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
-import Header from "../../components/common/Header";
-import { DetailApprove } from "../../data/DetailApprove";
-import { Colors } from "../../theme/Colors";
-import ApproveItem from "../../components/element/ApproveItem";
-import { STATUS_APPROVE, distanceHorizontal } from "../../utils/Define";
+import Header from "@commonComponent/Header";
+import { DetailApprove } from "@dataFake/DetailApprove";
+import { Colors } from "@theme/Colors";
+import ApproveItem from "@components/element/ApproveItem";
+import { STATUS_APPROVE, distanceHorizontal } from "@utils/Define";
 import moment from "moment";
 import { SafeAreaView } from "react-native-safe-area-context";
 

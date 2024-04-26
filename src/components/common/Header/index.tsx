@@ -6,8 +6,8 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import { distanceHorizontal } from "../../../utils/Define";
-import { IconArrowBack } from "../../../../assets/icons";
+import { distanceHorizontal } from "@utils/Define";
+import { IconArrowBack } from "@assets/icons";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { textSizeStyle } from "../TextSize";
 

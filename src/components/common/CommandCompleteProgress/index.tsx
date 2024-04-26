@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { distanceHorizontal } from "../../../utils/Define";
+import { distanceHorizontal } from "@utils/Define";
 
 interface Props {
   completePercent?: number;

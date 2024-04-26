@@ -7,13 +7,9 @@ import {
   Keyboard,
   TouchableOpacity,
 } from "react-native";
-import {
-  IconPassword,
-  IconShowPassword,
-  IconUser,
-} from "../../../../assets/icons";
+import { IconPassword, IconShowPassword, IconUser } from "@assets/icons";
 import React, { useState } from "react";
-import { Colors } from "../../../theme/Colors";
+import { Colors } from "@theme/Colors";
 interface Props {
   placeHolder?: string;
   isPassword?: boolean;

@@ -1,4 +1,41 @@
 {
-  "compilerOptions": {},
-  "extends": "expo/tsconfig.base"
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@hook/*": ["src/hook/*"],
+      "@navigation/*": ["src/navigation/*"],
+      "@screens/*": ["src/screens/*"],
+      "@theme/*": ["src/theme/*"],
+      "@types/*": ["src/types/*"],
+      "@utils/*": ["src/utils/*"],
+      "@assets/*": ["assets/*"],
+      "@commonComponent/*": ["src/components/common/*"],
+      "@sliceRedux/*": ["src/sliceRedux/*"],
+      "@dataFake/*": ["src/data/*"]
+
+    },
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ]
 }
