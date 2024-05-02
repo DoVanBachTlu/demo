@@ -8,7 +8,6 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useRoute } from "@react-navigation/native";
 import Header from "@commonComponent/Header";
 import { DetailApprove } from "@dataFake/DetailApprove";
 import { Colors } from "@theme/Colors";
@@ -17,18 +16,9 @@ import { STATUS_APPROVE, distanceHorizontal } from "@utils/Define";
 import moment from "moment";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-interface RouteParams {
-  selectedFilter?: {
-    id: number;
-    label: string;
-  };
-  idItem?: number;
-}
 const windowWidth = Dimensions.get("window").width;
-export default function ApproveDetail(): React.ReactNode {
-  const route = useRoute();
-  const routeParams = route.params as RouteParams;
-  const { selectedFilter, idItem } = routeParams ?? {};
+export default function ApproveDetail(props: any): React.ReactNode {
+  const { selectedFilter, idItem } = props.route.params;
   const [approveDetail, setApproveDetail] = useState<{ subCommand: any[] }[]>(
     []
   );

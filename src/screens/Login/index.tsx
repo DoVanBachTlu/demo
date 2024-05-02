@@ -127,14 +127,12 @@ export default function Login(): React.ReactNode {
       color: Colors.grey,
     },
   });
+  const pathImgLogo = "../../../assets/logo.png";
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <SafeAreaView style={styles.container}>
         <View style={styles.mainView}>
-          <Image
-            style={styles.imgLogo}
-            source={require("../../../assets/logo.png")}
-          />
+          <Image style={styles.imgLogo} source={require(pathImgLogo)} />
           <Text style={styles.title}>Hệ thống FlexCash</Text>
           <TextInput
             placeHolder={"Tài khoản"}

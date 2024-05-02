@@ -28,6 +28,12 @@ import { useSelector } from "react-redux";
 const windowWidth = Dimensions.get("window").width;
 const distanceBetweenCategory = 20;
 const maxItemsPerRow = 3;
+const sizeCategoryButton =
+  (windowWidth -
+    distanceHorizontal * 2 -
+    (maxItemsPerRow - 1) * distanceBetweenCategory) /
+  maxItemsPerRow;
+
 export default function Home(): React.ReactNode {
   const [backPressedOnce, setBackPressedOnce] = useState(false);
   const navigation = useNavigation();
@@ -41,12 +47,8 @@ export default function Home(): React.ReactNode {
         "hardwareBackPress",
         handleBackPress
       );
-      const timerId = setTimeout(() => {
-        setBackPressedOnce(false);
-      }, 2000);
       return () => {
         backHandler.remove();
-        clearTimeout(timerId);
       };
     }
   }, [backPressedOnce]);
@@ -57,6 +59,9 @@ export default function Home(): React.ReactNode {
         "Ấn nút Back lần nữa để thoát ứng dụng",
         ToastAndroid.SHORT
       );
+      setTimeout(() => {
+        setBackPressedOnce(false);
+      }, 2000);
       return true;
     } else {
       BackHandler.exitApp();
@@ -87,80 +92,10 @@ export default function Home(): React.ReactNode {
       onPress: () => {},
     },
   ];
-  const sizeCategoryButton =
-    (windowWidth -
-      distanceHorizontal * 2 -
-      (maxItemsPerRow - 1) * distanceBetweenCategory) /
-    maxItemsPerRow;
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    imgBg: {
-      flex: 1,
-      height: "100%",
-      width: "100%",
-      alignItems: "center",
-      // justifyContent: "space-between"
-    },
-    header: {
-      flexDirection: "row",
-      marginTop: 16,
-      alignItems: "center",
-      justifyContent: "space-between",
-      width: "100%",
-      paddingHorizontal: distanceHorizontal,
-      marginBottom: 32,
-    },
-    viewCategory: {
-      backgroundColor: "white",
-      borderTopLeftRadius: 32,
-      borderTopRightRadius: 32,
-      width: "100%",
-      paddingHorizontal: distanceHorizontal,
-      paddingTop: 32,
-      flex: 1,
-    },
-    listCategoriesView: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-around",
-      flexWrap: "wrap",
-    },
-    categoryBtn: {
-      alignItems: "center",
-      justifyContent: "center",
-      width: sizeCategoryButton,
-      height: sizeCategoryButton,
-      borderRadius: 20,
-      borderColor: "#00000016",
-      borderWidth: 1,
-      marginTop: distanceBetweenCategory,
-    },
-    wrapViewInfoCommon: { flexDirection: "row", flexShrink: 1 },
-    wrapViewHello: { flex: 1, marginHorizontal: 12 },
-    flexRow: {
-      flexDirection: "row",
-    },
-    txtHello: { ...textSizeStyle.normal, color: "white" },
-    txtWhiteBold: { fontWeight: "bold", color: "white" },
-    txtTitle: {
-      ...textSizeStyle.biggest,
-      fontWeight: "600",
-    },
-    txtLabelCategory: { ...textSizeStyle.small, marginTop: 12 },
-    viewtxtCategoryTitle: {
-      marginBottom: 24,
-    },
-  });
+  const pathImgBg = "../../../assets/background.jpg";
   return (
     <SafeAreaView style={styles.container}>
-      <ImageBackground
-        style={styles.imgBg}
-        source={require("../../../assets/background.jpg")}
-      >
+      <ImageBackground style={styles.imgBg} source={require(pathImgBg)}>
         <View style={styles.header}>
           <View style={styles.wrapViewInfoCommon}>
             <TouchableOpacity>
@@ -205,3 +140,66 @@ export default function Home(): React.ReactNode {
     </SafeAreaView>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  imgBg: {
+    flex: 1,
+    height: "100%",
+    width: "100%",
+    alignItems: "center",
+    // justifyContent: "space-between"
+  },
+  header: {
+    flexDirection: "row",
+    marginTop: 16,
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    paddingHorizontal: distanceHorizontal,
+    marginBottom: 32,
+  },
+  viewCategory: {
+    backgroundColor: "white",
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32,
+    width: "100%",
+    paddingHorizontal: distanceHorizontal,
+    paddingTop: 32,
+    flex: 1,
+  },
+  listCategoriesView: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    flexWrap: "wrap",
+  },
+  categoryBtn: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: sizeCategoryButton,
+    height: sizeCategoryButton,
+    borderRadius: 20,
+    borderColor: "#00000016",
+    borderWidth: 1,
+    marginTop: distanceBetweenCategory,
+  },
+  wrapViewInfoCommon: { flexDirection: "row", flexShrink: 1 },
+  wrapViewHello: { flex: 1, marginHorizontal: 12 },
+  flexRow: {
+    flexDirection: "row",
+  },
+  txtHello: { ...textSizeStyle.normal, color: "white" },
+  txtWhiteBold: { fontWeight: "bold", color: "white" },
+  txtTitle: {
+    ...textSizeStyle.biggest,
+    fontWeight: "600",
+  },
+  txtLabelCategory: { ...textSizeStyle.small, marginTop: 12 },
+  viewtxtCategoryTitle: {
+    marginBottom: 24,
+  },
+});
