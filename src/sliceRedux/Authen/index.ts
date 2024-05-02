@@ -10,8 +10,8 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     saveCredentials: (state, action) => {
-      state.savedAccount = action.payload?.savedAccount;
-      state.savedPassword = action.payload?.savedPassword;
+      state.savedAccount = action.payload?.accountValue;
+      state.savedPassword = action.payload?.passwordValue;
     },
   },
 });

@@ -44,7 +44,6 @@ export default function Approve(): React.ReactNode {
     setIsLoadingMore(false);
     setVisibleDataCount(limitPerPage);
   }, [selectedFilterItem]);
-
   return (
     <SafeAreaView style={styles.container}>
       <Header headerTitle="Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt Phê duyệt" />

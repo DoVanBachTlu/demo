@@ -23,14 +23,18 @@ import {
 import { textSizeStyle } from "@commonComponent/TextSize";
 import { ScreenName } from "@navigation/router/ScreenName";
 import { distanceHorizontal } from "@utils/Define";
+import { useSelector } from "react-redux";
 
 const windowWidth = Dimensions.get("window").width;
 const distanceBetweenCategory = 20;
 const maxItemsPerRow = 3;
 export default function Home(): React.ReactNode {
   const [backPressedOnce, setBackPressedOnce] = useState(false);
-
   const navigation = useNavigation();
+  const credential = useSelector((state) => state.authen);
+
+  console.log("savedAccount--", credential);
+
   useEffect(() => {
     if (Platform.OS === "android") {
       const backHandler = BackHandler.addEventListener(
