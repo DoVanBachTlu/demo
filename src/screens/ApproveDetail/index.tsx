@@ -27,8 +27,11 @@ interface RouteParams {
 const windowWidth = Dimensions.get("window").width;
 export default function ApproveDetail(): React.ReactNode {
   const route = useRoute();
-  const { selectedFilter, idItem }: RouteParams = route.params;
-  const [approveDetail, setApproveDetail] = useState([]);
+  const routeParams = route.params as RouteParams;
+  const { selectedFilter, idItem } = routeParams ?? {};
+  const [approveDetail, setApproveDetail] = useState<{ subCommand: any[] }[]>(
+    []
+  );
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
@@ -68,7 +71,7 @@ export default function ApproveDetail(): React.ReactNode {
               paddingHorizontal: index === 0 ? 16 : 0,
               borderBottomWidth: index === subCommand.length - 1 ? 0 : 1,
               borderBottomColor:
-                index === subCommand.length - 1 ? null : "#E0E0E0",
+                index === subCommand.length - 1 ? undefined : "#E0E0E0",
             },
             textCodeSubCommand: {
               color: index === 0 ? Colors.bgButtonApprove : "#575757",
@@ -114,7 +117,7 @@ export default function ApproveDetail(): React.ReactNode {
               return (
                 <>
                   <ApproveItem key={index} atDetail dataItem={item} />
-                  {item?.subCommand?.map((subItem, subIndex) => {
+                  {item?.subCommand?.map((subItem: any, subIndex: number) => {
                     return <CustomSubCommand item={subItem} />;
                   })}
                 </>

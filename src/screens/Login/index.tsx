@@ -100,7 +100,7 @@ export default function Login(): React.ReactNode {
       height: sizeSelectedBox,
       width: sizeSelectedBox,
       marginRight: 10,
-      backgroundColor: selectedSaveLogin ? Colors.bgButtonApprove : null,
+      backgroundColor: selectedSaveLogin ? Colors.bgButtonApprove : undefined,
     },
     btnLogin: {
       alignItems: "center",

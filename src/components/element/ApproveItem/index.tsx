@@ -109,7 +109,7 @@ export default function ApproveItem(props: Props): React.ReactNode {
     container: {
       flexDirection: "row",
       paddingVertical: 12,
-      borderBottomColor: props.atCommon ? "#E0E0E0" : null,
+      borderBottomColor: props.atCommon ? "#E0E0E0" : undefined,
       borderBottomWidth: props.atCommon ? 1 : 0,
       alignItems: "center",
       justifyContent: "space-between",
@@ -187,9 +187,13 @@ export default function ApproveItem(props: Props): React.ReactNode {
             {index === itemInfo.length - 1 && item.isShow ? (
               <CommandCompleteProgress
                 completePercent={
-                  (props.dataItem.commandComplete /
-                    props.dataItem.commandTotal) *
-                  100
+                  props.dataItem &&
+                  props.dataItem.commandTotal &&
+                  props.dataItem.commandComplete
+                    ? (props.dataItem.commandComplete /
+                        props.dataItem.commandTotal) *
+                      100
+                    : 0
                 }
               />
             ) : null}

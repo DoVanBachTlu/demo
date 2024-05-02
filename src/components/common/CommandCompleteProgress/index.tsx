@@ -14,15 +14,16 @@ export default function CommandCompleteProgress(props: Props): React.ReactNode {
       marginHorizontal: distanceHorizontal,
     },
     completeProgress: {
-      width: `${props.completePercent}%`,
+      width: props.completePercent ? `${props.completePercent}%` : 0,
       flex: 1,
       borderRadius: 8,
-      backgroundColor:
-        props.completePercent == 100
+      backgroundColor: props.completePercent
+        ? props.completePercent == 100
           ? "green"
           : props.completePercent < 100 && props.completePercent >= 50
           ? "#EAA300"
-          : "red",
+          : "red"
+        : undefined,
     },
   });
   return (
